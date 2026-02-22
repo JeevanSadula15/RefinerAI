@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RefineAI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="url(#grad1)" />
+          <defs>
+            <linearGradient id="grad1" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#818cf8" />
+              <stop offset="1" stop-color="#c084fc" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <h1 class="header-title">RefineAI</h1>
+    </div>
+    <button id="settingsBtn" class="icon-btn" title="Settings">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path
+          d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.32 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z">
+        </path>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Settings Panel (Collapsible) -->
+  <div id="settingsPanel" class="settings-panel hidden">
+    <div class="settings-inner">
+      <label class="settings-label">Groq API Key</label>
+      <div class="api-key-row">
+        <input type="password" id="apiKeyInput" class="input api-key-input" placeholder="gsk_xxxxxxxxxxxxxxxx" />
+        <button id="toggleKeyVisibility" class="icon-btn small" title="Show/Hide">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
+      <button id="saveApiKey" class="btn btn-save">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Save Key
+      </button>
+      <p class="settings-hint">Get your free API key at <a href="https://console.groq.com/keys"
+          target="_blank">console.groq.com</a></p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Input Section -->
+    <section class="section">
+      <label class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+        </svg>
+        Original Text
+      </label>
+      <textarea id="inputText" class="textarea"
+        placeholder="Select text on any webpage, right-click → 'Refine with RefineAI'&#10;&#10;Or paste your text here..."
+        rows="5"></textarea>
+      <div class="input-actions">
+        <button id="pasteBtn" class="btn btn-ghost" title="Paste from clipboard">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Paste
+        </button>
+        <button id="micBtn" class="btn btn-ghost btn-mic" title="Speech to text">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span id="micBtnText">Speak</span>
+        </button>
+        <button id="clearBtn" class="btn btn-ghost" title="Clear text">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          Clear
+        </button>
+      </div>
+    </section>
+
+    <!-- Audience Selector -->
+    <section class="section">
+      <label class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        Who is this for?
+      </label>
+      <select id="audienceSelect" class="select">
+        <option value="General">General Audience</option>
+        <option value="Teacher / Professor">Teacher / Professor</option>
+        <option value="Friend">Friend</option>
+        <option value="Manager">Manager</option>
+        <option value="Client">Client</option>
+        <option value="Team Member">Team Member</option>
+        <option value="Social Media">Social Media</option>
+        <option value="Student Group">Student Group</option>
+        <option value="HR / Recruiter">HR / Recruiter</option>
+        <option value="Custom">Custom Audience</option>
+      </select>
+      <input type="text" id="customAudience" class="input custom-audience hidden"
+        placeholder="Describe your audience..." />
+    </section>
+
+    <!-- Tone Selector -->
+    <section class="section">
+      <label class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+          </polygon>
+        </svg>
+        Refinement Style
+      </label>
+      <div class="tone-grid" id="toneGrid">
+        <button class="tone-pill active" data-tone="Professional">Professional</button>
+        <button class="tone-pill" data-tone="Casual">Casual</button>
+        <button class="tone-pill" data-tone="Friendly">Friendly</button>
+        <button class="tone-pill" data-tone="Formal">Formal</button>
+        <button class="tone-pill" data-tone="Student Message">Student Message</button>
+        <button class="tone-pill" data-tone="Corporate Email">Corporate Email</button>
+        <button class="tone-pill" data-tone="LinkedIn Style">LinkedIn Style</button>
+        <button class="tone-pill" data-tone="WhatsApp Style">WhatsApp Style</button>
+        <button class="tone-pill" data-tone="Polite Request">Polite Request</button>
+        <button class="tone-pill" data-tone="Short & Crisp">Short & Crisp</button>
+        <button class="tone-pill" data-tone="Confident Tone">Confident Tone</button>
+        <button class="tone-pill" data-tone="Grammar Fix Only">Grammar Fix Only</button>
+      </div>
+    </section>
+
+    <!-- Refine Button -->
+    <button id="refineBtn" class="btn btn-refine">
+      <span class="btn-refine-content">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="currentColor" />
+        </svg>
+        Refine Text
+      </span>
+      <span class="btn-refine-loading hidden">
+        <div class="spinner"></div>
+        Refining...
+      </span>
+    </button>
+
+    <!-- Output Section -->
+    <section id="outputSection" class="section output-section hidden">
+      <label class="section-label">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        Refined Text
+      </label>
+      <div class="output-card">
+        <p id="outputText" class="output-text"></p>
+      </div>
+      <div id="tokenUsage" class="token-usage hidden">
+        <span class="token-item">
+          <span class="token-label">Input</span>
+          <span id="inputTokens" class="token-value">0</span>
+        </span>
+        <span class="token-divider">•</span>
+        <span class="token-item">
+          <span class="token-label">Output</span>
+          <span id="outputTokens" class="token-value">0</span>
+        </span>
+        <span class="token-divider">•</span>
+        <span class="token-item">
+          <span class="token-label">Total</span>
+          <span id="totalTokens" class="token-value">0</span>
+        </span>
+      </div>
+      <div class="output-actions">
+        <button id="copyBtn" class="btn btn-action" title="Copy to clipboard">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          Copy
+        </button>
+        <button id="regenerateBtn" class="btn btn-action" title="Regenerate">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          Regenerate
+        </button>
+        <button id="shorterBtn" class="btn btn-action" title="Make shorter">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="17" y1="10" x2="3" y2="10"></line>
+            <line x1="21" y1="6" x2="3" y2="6"></line>
+            <line x1="13" y1="14" x2="3" y2="14"></line>
+            <line x1="17" y1="18" x2="3" y2="18"></line>
+          </svg>
+          Shorter
+        </button>
+        <button id="moreProfBtn" class="btn btn-action" title="More professional">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          More Pro
+        </button>
+        <button id="moreCasualBtn" class="btn btn-action" title="More casual">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+            <line x1="9" y1="9" x2="9.01" y2="9"></line>
+            <line x1="15" y1="9" x2="15.01" y2="9"></line>
+          </svg>
+          Casual
+        </button>
+      </div>
+    </section>
+
+    <!-- Error Message -->
+    <div id="errorMsg" class="error-msg hidden"></div>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toastText">Copied!</span>
+  </div>
+
+  <script src="sidepanel.js"></script>
+</body>
+
+</html>
